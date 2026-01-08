@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Residuos</title>
+    <style>
+        body { font-family: Arial; background: #f4f4f4; padding: 20px; }
+        .container { background: white; padding: 20px; border-radius: 10px; width: 800px; margin: auto; }
+        h2 { color: #333; }
+        form { margin-bottom: 20px; }
+        input, textarea { padding: 8px; width: 100%; margin: 5px 0; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px; }
+        th { background: #4CAF50; color: white; }
+        .btn { padding: 8px 12px; border: none; cursor: pointer; border-radius: 5px; }
+        .btn-add { background: #4CAF50; color: white; }
+        .btn-delete { background: red; color: white; }
+
+        /* Botones nuevos */
+        .btn-auth {
+            background: #1976D2;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- 🔹 BOTONES DE ACCESO -->
+    <a href="/login" class="btn-auth">Iniciar Sesión</a>
+    <a href="/registro" class="btn-auth">Registrar Usuario</a>
+    <a href="/pedir_permiso" class="btn-auth">Pedir permiso</a> <!-- NUEVO -->
+    <br><br>
+
+    <h2>Agregar residuo</h2>
+    <form method="POST">
+        <input type="text" name="tipo" placeholder="Tipo (Plástico, vidrio...)" required>
+        <textarea name="descripcion" placeholder="Descripción" required></textarea>
+        <input type="text" name="color" placeholder="Color del contenedor" required>
+        <input type="text" name="ejemplos" placeholder="Ejemplos (botellas, bolsas...)">
+        <button class="btn btn-add">Agregar</button>
+    </form>
+
+    <h2>Consultar por ID</h2>
+    <form method="POST">
+        <input type="number" name="id_consulta" placeholder="Ingresa ID a buscar">
+        <button class="btn">Consultar</button>
+    </form>
+
+    {% if residuo_consultado %}
+    <h3>Resultado:</h3>
+    <p><b>Tipo:</b> {{ residuo_consultado.tipo }}</p>
+    <p><b>Descripción:</b> {{ residuo_consultado.descripcion }}</p>
+    <p><b>Color:</b> {{ residuo_consultado.color_contenedor }}</p>
+    <p><b>Ejemplos:</b> {{ residuo_consultado.ejemplos }}</p>
+    {% endif %}
+
+    {% if mensaje %}
+    <p style="color:red;">{{ mensaje }}</p>
+    {% endif %}
+
+    <h2>Lista de residuos registrados</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Tipo</th>
+            <th>Color</th>
+            <th>Ejemplos</th>
+            <th>Eliminar</th>
+        </tr>
+
+        {% for r in residuos %}
+        <tr>
+            <td>{{ r.id }}</td>
+            <td>{{ r.tipo }}</td>
+            <td>{{ r.color_contenedor }}</td>
+            <td>{{ r.ejemplos }}</td>
+            <td>
+                <form action="/eliminar" method="POST">
+                    <input type="hidden" name="id" value="{{ r.id }}">
+                    <button class="btn btn-delete">X</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+    <a href="/consultas">Ir a consultas avanzadas</a>
+
+</div>
+
+</body>
+</html>
+
+
+
+
+
+

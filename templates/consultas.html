@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Consultas avanzadas de residuos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 650px;
+            margin: auto;
+            box-shadow: 0px 0px 10px #bbb;
+        }
+        h2 {
+            text-align: center;
+        }
+        label, select, input, button {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid gray;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        td, th {
+            padding: 8px;
+            text-align: left;
+        }
+        .mensaje {
+            margin-top: 15px;
+            font-weight: bold;
+            color: red;
+            text-align: center;
+        }
+        .volver {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .volver a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Consultas Avanzadas de Residuos</h2>
+
+    <form action="/consultas" method="POST">
+
+        <label for="criterio">Selecciona un criterio de búsqueda:</label>
+        <select name="criterio" id="criterio" required>
+            <option value="">-- Selecciona --</option>
+            <option value="tipo">Buscar por tipo</option>
+            <option value="color">Buscar por color</option>
+            <option value="ejemplos">Buscar por ejemplos</option>
+        </select>
+
+        <label>Ingresa el valor para la búsqueda (si aplica):</label>
+        <input type="text" name="valor" placeholder="Ejemplo: botella, papel, tóxico, etc.">
+
+        <button type="submit">Consultar</button>
+    </form>
+
+    {% if mensaje_consulta %}
+        <p class="mensaje">{{ mensaje_consulta }}</p>
+    {% endif %}
+
+    {% if resultados %}
+        <h3>Resultados:</h3>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Tipo</th>
+                <th>Descripcion</th>
+                <th>ejemplos</th>
+            </tr>
+            {% for r in resultados %}
+            <tr>
+                <td>{{ r.id }}</td>
+                <td>{{ r.tipo }}</td>
+                <td>{{ r.descripcion }}</td>
+                <td>{{ r.ejemplos }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+    <div class="volver">
+        <a href="/">← Volver al inicio</a>
+    </div>
+
+</div>
+
+</body>
+</html>

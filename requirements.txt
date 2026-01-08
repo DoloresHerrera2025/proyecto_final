@@ -1,8 +1,13 @@
 flask
 flask_sqlalchemy
+<<<<<<< HEAD
 gunicorn
 Flask
 
 Werkzeug
 
 flask_login
+=======
+flask_login
+werkzeug
+>>>>>>> 2f1ee8aa6a3cb9075bf3b2672a7124c0f3b19a89
